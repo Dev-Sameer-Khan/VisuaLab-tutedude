@@ -41,7 +41,7 @@ const Product = () => {
   // Fallback to 'protein' if route param is missing or not found
   const product = productData[productName?.toLowerCase()] || productData['protein'];
 
-  const [selectedFlavor, setSelectedFlavor] = useState(product.flavors[0]);
+  // const [selectedFlavor, setSelectedFlavor] = useState(product.flavors[0]);
   const [packSize, setPackSize] = useState("2 Pack");
   // const [subscribe, setSubscribe] = useState(true);
 
@@ -57,7 +57,7 @@ const Product = () => {
 
         {/* RIGHT SIDE - DETAILS */}
         <div>
-          <h1 className="text-[3vw] mb-2">{product.name} – {selectedFlavor}</h1>
+          <h1 className="text-[3vw] mb-2">{product.name}</h1>
           <p className="text-[1vw] text-orange-600 mb-1">★★★★★ <span className='text-[#59432D]'>{product.reviews} reviews</span></p>
 
           <p className="font-[second] font-black mt-4 mb-1">BEST USED FOR:</p>
@@ -69,25 +69,6 @@ const Product = () => {
             ))}
           </div>
 
-          {/* Flavor Picker */}
-          <div className="mb-4">
-            <p className="mb-2 text-[1vw] font-[second] font-black">Pick your product: <span className='text-orange-600 font-[one] text-[.9vw]'>{selectedFlavor}</span></p>
-            <div className="flex gap-2">
-              {product.flavors.map((flavor) => (
-                <button
-                  key={flavor}
-                  className={`border px-4 py-2 rounded-xl text-sm transition ${
-                    selectedFlavor === flavor
-                      ? "bg-[#4B2E1B] text-white"
-                      : "bg-white text-[#4B2E1B] border-[#4B2E1B]"
-                  }`}
-                  onClick={() => setSelectedFlavor(flavor)}
-                >
-                  {flavor}
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* Pack Size */}
           <div className="mb-4">
@@ -145,6 +126,18 @@ const Product = () => {
                   required
                 />
               </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="bidderEmail" className="font-[second] text-[.95vw] font-semibold">
+                  Your Email
+                </label>
+                <input
+                  id="bidderEmail"
+                  type="email"
+                  placeholder="Enter your email"
+                  className="border border-[#4B2E1B] rounded-lg px-4 py-2 text-[1vw] focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  required
+                />
+              </div>
               <button
                 type="submit"
                 className="w-full bg-[#FF6A00] text-white font-bold py-3 rounded-xl text-lg mt-2 hover:bg-[#e65c00] transition"
@@ -152,13 +145,22 @@ const Product = () => {
                 Place Bid
               </button>
             </form>
-            <div className="mt-4">
+           <div className='w-full flex items-center justify-between'>
+           <div className="mt-4">
               <p className="font-[second] font-semibold text-[.95vw] mb-1">Current Highest Bid:</p>
               <div className="flex items-center gap-2">
                 <span className="text-[1.1vw] font-bold text-[#4B2E1B]">$123.45</span>
-                <span className="text-xs text-[#6C5A4E]">(by John Doe)</span>
+                <span className="text-xs text-[#6C5A4E]">(by Abhisekh)</span>
               </div>
             </div>
+            <div className="mt-4">
+              <p className="font-[second] font-semibold text-[.95vw] mb-1">Sellers Bid:</p>
+              <div className="flex items-center gap-2">
+                <span className="text-[1.1vw] font-bold text-[#4B2E1B]">$123.45</span>
+                <span className="text-xs text-[#6C5A4E]">(by Sameer)</span>
+              </div>
+            </div>
+           </div>
           </div>
 
           <div className="mt-4 text-sm text-[#6C5A4E] flex flex-wrap gap-4">

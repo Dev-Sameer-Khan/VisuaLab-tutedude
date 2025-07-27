@@ -58,7 +58,7 @@ const Navbar = () => {
       max-[1025px]:px-10  max-[599px]:items-center max-[599px]:gap-4 max-[599px]:py-4 max-[599px]:px-6"
           >
             {/* Left links */}
-            <div className="links flex items-center gap-10 text-[1.3vw] max-[1025px]:text-[2vw] max-[599px]:text-base max-[599px]:gap-4">
+            <div className="links font-[second] font-black flex items-center gap-10 text-[1.3vw] max-[1025px]:text-[2vw] max-[599px]:text-base max-[599px]:gap-4">
               <a href="#shop">Shop</a>
               <a href="#about">About</a>
             </div>
@@ -82,7 +82,7 @@ const Navbar = () => {
                 onClick={() => setShowSearch(true)}
               />
               {/* {showSearch && <Search />} */}
-              <Link to={login ? "/seller/dashboard" : "/login"}>
+              <Link to={login ? "/seller/all-order" : "/login"}>
                 <CgProfile className="cursor-pointer" />
               </Link>
             </div>

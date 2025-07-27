@@ -51,7 +51,7 @@ const Team = () => {
     }}
   >
     <h2 className="text-3xl md:text-5xl max-[599px]:text-2xl font-semibold text-center text-[#4e3c2f] mb-20 max-[599px]:mb-12">
-      Mushroom Legacy Beyond A Decade
+    MundyExpress Legacy Beyond a Decade
     </h2>
   
     <div className="relative flex flex-col md:flex-row flex-wrap justify-center items-center gap-40 max-[1025px]:gap-20 max-[599px]:gap-12">

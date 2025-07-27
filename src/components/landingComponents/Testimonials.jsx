@@ -5,26 +5,26 @@ import { Navigation } from "swiper/modules";
 
 const testimonialsData = [
   {
-    name: "Rich Roll",
+    name: "Nilan Karan ",
     image:
-      "https://us.foursigmatic.com/cdn/shop/files/Rich_Roll.png?v=1738743258",
-    title: "Ultra-Endurance Athlete, Host of The Rich Roll Podcast",
-    quote: `"My morning go-to when I need to get up, go, and keep going."`,
+      "https://res.cloudinary.com/djzddppwb/image/upload/v1753611196/3_ulnqxg.jpg",
+    title: "Classis user of MundyExpress, Chef and Cook by heart.",
+    quote: `"My Go to product for daily use and keep going"`,
   },
   // Add more testimonials here as needed
   {
-    name: "Dr. Mark Hyman",
+    name: "Francis Kimin",
     image:
-      "https://us.foursigmatic.com/cdn/shop/files/Mark_Hyman_9d7b01c6-f29d-45e6-a214-640ee9cdeed1.png?v=1738743443",
-    title: "Physician, Author, and Health Advocate",
-    quote: `"Four Sigmatic is a daily staple in my wellness routine."`,
+      "https://res.cloudinary.com/djzddppwb/image/upload/v1753611197/2_troars.jpg",
+    title: "Classis user of MundyExpress, Traveler and Tech-Businessman.",
+    quote: `"As i am always on the run i need to keep up with the ever growing energy usage and this product helps with that alot"`,
   },
   {
-    name: "Allyson Felix",
+    name: "Allison Chome",
     image:
-      "https://us.foursigmatic.com/cdn/shop/files/Joe_Rogan.png?v=1738743258",
-    title: "Olympic Gold Medalist, Track & Field",
-    quote: `"I love how clean and effective these products are."`,
+      "https://res.cloudinary.com/djzddppwb/image/upload/v1753611197/1_hsmcbt.jpg",
+    title: "Premium user of MundyExpress, Track and Field.",
+    quote: `My Mother used this product a lot and this is by far the best thing to get for anything related to food"`,
   },
 ];
 
@@ -69,7 +69,7 @@ const Testimonials = () => {
           {/* Image */}
           <div className="w-full md:w-1/2 h-64 md:h-full overflow-hidden flex items-center justify-center">
             <img
-              className="w-full h-full object-cover"
+              className="w-full h-64 object-cover"
               src={testimonial.image}
               alt={testimonial.name}
             />
