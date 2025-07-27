@@ -9,9 +9,9 @@ const cardsData = [
     labelClass: "bg-[#59432D] text-[#F9F5ED]",
     showLabel: true,
     img: "https://res.cloudinary.com/djzddppwb/image/upload/v1753610304/Product_Mockup1_ocld9q.png",
-    alt: "Fruits",
-    title: "Fruits",
-    link: "/product/fruits",
+    alt: "Test Product",
+    title: "Test Product",
+    link: "/product/6885ec06620f543197d12c7e",
   },
   {
     label: "",

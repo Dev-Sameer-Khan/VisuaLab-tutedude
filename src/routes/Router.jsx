@@ -22,7 +22,7 @@ const Router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/product/:slug",
+    path: "/product/:productId",
     element: <Product />,
     errorElement: <ErrorPage />,
   },

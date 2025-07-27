@@ -1,30 +1,35 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useUserStore from '../store/User.store'; // Zustand store
+import { useDispatch } from 'react-redux';
+import { setToken, setUser } from '../store/User.Slice';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const { setUser, setToken } = useUserStore(); // Zustand actions
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Send OTP request to the backend
       const response = await fetch('/api/v1/auth/generate-login-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to send OTP.');
+      }
 
       const data = await response.json();
       if (data.success) {
@@ -34,7 +39,7 @@ const Login = () => {
         toast.error(data.message || 'Failed to send OTP.');
       }
     } catch (err) {
-      toast.error('An error occurred while sending OTP.');
+      toast.error(err.message || 'An error occurred while sending OTP.');
     } finally {
       setLoading(false);
     }
@@ -45,25 +50,30 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // Verify OTP request to the backend
       const response = await fetch('/api/v1/auth/validate-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp }),
       });
 
+      if (!response.ok) {
+        throw new Error('Failed to verify OTP.');
+      }
+
       const data = await response.json();
+      console.log(data);
       if (data.success) {
         toast.success('Login successful!');
-        setUser(data.user); // Set user details in Zustand store
-        setToken(data.token); // Set token in Zustand store
+        dispatch(setUser(data.data.user)); // Dispatch user data to Redux store
+      
+        localStorage.setItem('token', data.data.token); // Store token in localStorage
         localStorage.setItem('isLoggedIn', true); // Optional: Persist login state
-        window.location.href = '/seller/all-order'; // Redirect to dashboard
+        navigate('/seller/all-order'); // Redirect to dashboard
       } else {
         toast.error(data.message || 'Invalid OTP.');
       }
     } catch (err) {
-      toast.error('An error occurred while verifying OTP.');
+      toast.error(err.message || 'An error occurred while verifying OTP.');
     } finally {
       setLoading(false);
     }
