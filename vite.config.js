@@ -8,12 +8,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: 'https://mandiexpress-backend.onrender.com',
         changeOrigin: true,
         secure: false,
       },
       '/socket.io': {
-        target: 'http://localhost:4000',
+        target: 'https://mandiexpress-backend.onrender.com',
         ws: true,
         changeOrigin: true,
       },
