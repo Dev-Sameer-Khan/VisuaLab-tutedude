@@ -1,99 +1,156 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-
-const productData = {
-  protein: {
-    name: "Plant-Based Protein",
-    images: [
-      "/images/protein-1.png",
-      "/images/protein-2.png",
-      "/images/protein-lifestyle-1.png",
-      "/images/protein-lifestyle-2.png",
-      "/images/protein-packaging.png",
-    ],
-    flavors: ["Vanilla", "Chocolate", "Peanut Butter", "Unflavored"],
-    bestUsedFor: ["PROTEIN", "GUT HEALTH"],
-    reviews: 1234,
-    cupsSold: "+200M Cups of Four Sigmatic Sold",
-  },
-  coffee: {
-    name: "Mushroom Coffee",
-    images: [
-      "/images/coffee-1.png",
-      "/images/coffee-2.png",
-      "/images/coffee-lifestyle-1.png",
-      "/images/coffee-lifestyle-2.png",
-      "/images/coffee-packaging.png",
-    ],
-    flavors: ["Classic", "Dark Roast", "Hazelnut", "Unflavored"],
-    bestUsedFor: ["ENERGY", "FOCUS"],
-    reviews: 567,
-    cupsSold: "+100M Cups of Mushroom Coffee Sold",
-  },
-  // Add more products as needed
-};
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import socket from '../config/socket.mjs';
 
 const Product = () => {
-  const { productName } = useParams();
+  const { productId } = useParams();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
-  // Fallback to 'protein' if route param is missing or not found
-  const product =
-    productData[productName?.toLowerCase()] || productData["protein"];
-
-  // const [selectedFlavor, setSelectedFlavor] = useState(product.flavors[0]);
+  const [product, setProduct] = useState(null);
   const [packSize, setPackSize] = useState("2 Pack");
-  // const [subscribe, setSubscribe] = useState(true);
+  const [bidAmount, setBidAmount] = useState('');
+  const [email, setEmail] = useState('');
+
+  // Fetch product details and set up socket listeners
+  useEffect(() => {
+    if (productId) {
+      socket.emit('joinRoom', productId);
+    }
+
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(/api/v1/product/${productId});
+        if (!response.ok) throw new Error('Failed to fetch product details.');
+        const data = await response.json();
+        setProduct(data?.data);
+      } catch (error) {
+        toast.error(error.message || 'Failed to load product.');
+      }
+    };
+
+    fetchProduct();
+
+    // Listen for bid updates
+    socket.on("bidUpdate", (newBid) => {
+      console.log(New bid from ${newBid});
+      toast.success(New bid from ${newBid.name}: $${newBid.amount});
+
+      // // Update highest bid in product state
+      setProduct((prev) => ({
+        ...prev,
+        highestBid: newBid.amount,
+        bids: [...(prev?.bids || []), newBid],
+      }));
+    });
+
+    socket.on("bidError", (message) => {
+      toast.error(Bid error: ${message});
+    });
+
+    // Cleanup
+    return () => {
+      socket.off("bidUpdate");
+      socket.off("bidError");
+    };
+  }, [productId]);
+
+  // Set email if user is logged in
+  useEffect(() => {
+    if (isAuthenticated) setEmail(user?.email || '');
+    else setEmail('');
+  }, [isAuthenticated, user]);
+
+  const handlePlaceBid = (e) => {
+    e.preventDefault();
+
+    if (!user) {
+      toast.error('To place a bid, you need to log in first.');
+      navigate('/login');
+      return;
+    }
+
+    if (!bidAmount || parseFloat(bidAmount) <= product?.highestBid) {
+      toast.error('Your bid must be higher than the current highest bid.');
+      return;
+    }
+
+    socket.emit("placeBid", {
+      productId,
+      vendorId: user._id,
+      bidAmount: parseFloat(bidAmount),
+      email: user.email,
+      name: user.name,
+    });
+
+    toast.success(Bid of $${bidAmount} placed successfully!);
+    setBidAmount('');
+  };
+
+  if (!product) {
+    return (
+      <>
+        <Navbar />
+        <ToastContainer />
+        <div className="h-screen flex items-center justify-center">
+          <p>Loading product details...</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
       <Navbar />
-      <div className="bg-[#F8F4EC] text-[#4B2E1B] px-24 max-[1025px]:px-12 max-[599px]:px-4 pt-40 max-[599px]:pt-26 pb-10 font-[one]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-[599px]:gap-6">
-          {/* LEFT SIDE - IMAGE */}
+      <ToastContainer />
+      <div className="bg-[#F8F4EC] text-[#4B2E1B] px-24 pt-40 pb-10 font-[one]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* LEFT SIDE - IMAGES */}
           <div className="w-full h-full rounded-2xl overflow-hidden">
             <img
               className="w-full h-full object-cover"
-              src="https://us.foursigmatic.com/cdn/shop/files/vanilla-protein-benefits.jpg?crop=center&height=626&v=1735898320&width=626"
-              alt="product"
+              src={product.images[0]}
+              alt={product.title}
             />
           </div>
 
           {/* RIGHT SIDE - DETAILS */}
           <div>
-            <h1 className="text-[3vw] max-[1025px]:text-[4vw] max-[599px]:text-[6vw] mb-2">
-              {product.name}
-            </h1>
-
-            <p className="text-[1vw] max-[1025px]:text-[1.5vw] max-[599px]:text-[3.5vw] text-orange-600 mb-1">
-              ★★★★★{" "}
-              <span className="text-[#59432D]">{product.reviews} reviews</span>
+            <h1 className="text-[3vw] mb-2">{product.title}</h1>
+            <p className="text-[1vw] text-orange-600 mb-1">
+              ★★★★★ <span className="text-[#59432D]">{product.star} stars</span>
             </p>
+            <p className="text-[1vw] text-[#59432D] mb-4">{product.description}</p>
 
-            <p className="font-[second] font-black mt-4 mb-1 text-[1vw] max-[1025px]:text-[1.3vw] max-[599px]:text-[3.5vw]">
-              BEST USED FOR:
-            </p>
-            <div className="text-[.9vw] max-[1025px]:text-[1.2vw] max-[599px]:text-[3vw] font-[second] font-black flex flex-wrap gap-4 mb-4">
-              {product.bestUsedFor.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-1">
-                  <span className="w-4 h-4 rounded-full bg-[#59432D] text-[#F8F4EC] flex items-center justify-center">
-                    ✓
-                  </span>
-                  <span>{item}</span>
-                </div>
-              ))}
+            <p className="font-[second] font-black mt-4 mb-1">BEST USED FOR:</p>
+            <div className="text-[.9vw] font-[second] font-black flex gap-4 mb-4">
+              {product.label.length > 0 ? (
+                product.label.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-1">
+                    <span className="w-4 h-4 rounded-full bg-[#59432D] text-[#F8F4EC] flex items-center justify-center">
+                      ✓
+                    </span>
+                    <span>{item}</span>
+                  </div>
+                ))
+              ) : (
+                <span>No labels available</span>
+              )}
             </div>
 
             {/* Pack Size */}
             <div className="mb-4">
-              <p className="mb-2 font-black font-[second] text-[1vw] max-[1025px]:text-[1.3vw] max-[599px]:text-[3.5vw]">
-                Pack Size:{" "}
-                <span className="text-orange-600 text-[.9vw] max-[599px]:text-[3vw] font-[one]">
-                  {packSize}
-                </span>
+              <p className="mb-2 font-black font-[second] text-[1vw]">
+                Pack Size: <span className="text-orange-600 text-[.9vw] font-[one]">{packSize}</span>
               </p>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2">
                 {["1 Pack", "2 Pack", "4 Pack"].map((size) => (
                   <button
                     key={size}
@@ -112,66 +169,23 @@ const Product = () => {
 
             {/* Bidding Section */}
             <div className="bg-[#FFF2D6] border border-orange-200 p-6 rounded-xl mb-6">
-              <h2 className="font-[second] font-black text-[1.2vw] max-[1025px]:text-[1.6vw] max-[599px]:text-[4vw] mb-2">
-                Place Your Bid
-              </h2>
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="flex flex-col gap-4"
-              >
-                {/* Bid Amount */}
+              <h2 className="font-[second] font-black text-[1.2vw] mb-2">Place Your Bid</h2>
+              <form onSubmit={handlePlaceBid} className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
-                  <label
-                    htmlFor="bidAmount"
-                    className="font-[second] text-[.95vw] max-[599px]:text-[3.5vw] font-semibold"
-                  >
+                  <label htmlFor="bidAmount" className="font-[second] text-[.95vw] font-semibold">
                     Bid Amount
                   </label>
                   <input
                     id="bidAmount"
                     type="number"
-                    min="1"
                     step="0.01"
-                    placeholder="Enter your bid"
-                    className="border border-[#4B2E1B] rounded-lg px-4 py-2 text-[1vw] max-[599px]:text-[3.5vw] focus:outline-none focus:ring-2 focus:ring-orange-300"
+                    placeholder={Enter a bid higher than $${product.highestBid}}
+                    value={bidAmount}
+                    onChange={(e) => setBidAmount(e.target.value)}
+                    className="border border-[#4B2E1B] rounded-lg px-4 py-2 text-[1vw] focus:outline-none focus:ring-2 focus:ring-orange-300"
                     required
                   />
                 </div>
-
-                {/* Name */}
-                <div className="flex flex-col gap-1">
-                  <label
-                    htmlFor="bidderName"
-                    className="font-[second] text-[.95vw] max-[599px]:text-[3.5vw] font-semibold"
-                  >
-                    Your Name
-                  </label>
-                  <input
-                    id="bidderName"
-                    type="text"
-                    placeholder="Enter your name"
-                    className="border border-[#4B2E1B] rounded-lg px-4 py-2 text-[1vw] max-[599px]:text-[3.5vw] focus:outline-none focus:ring-2 focus:ring-orange-300"
-                    required
-                  />
-                </div>
-
-                {/* Email */}
-                <div className="flex flex-col gap-1">
-                  <label
-                    htmlFor="bidderEmail"
-                    className="font-[second] text-[.95vw] max-[599px]:text-[3.5vw] font-semibold"
-                  >
-                    Your Email
-                  </label>
-                  <input
-                    id="bidderEmail"
-                    type="email"
-                    placeholder="Enter your email"
-                    className="border border-[#4B2E1B] rounded-lg px-4 py-2 text-[1vw] max-[599px]:text-[3.5vw] focus:outline-none focus:ring-2 focus:ring-orange-300"
-                    required
-                  />
-                </div>
-
                 <button
                   type="submit"
                   className="w-full bg-[#FF6A00] text-white font-bold py-3 rounded-xl text-lg mt-2 hover:bg-[#e65c00] transition"
@@ -179,46 +193,13 @@ const Product = () => {
                   Place Bid
                 </button>
               </form>
-
-              {/* Bid Summary */}
-              <div className="w-full flex flex-col md:flex-row justify-between mt-4 gap-4">
-                {/* Highest */}
-                <div>
-                  <p className="font-[second] font-semibold text-[.95vw] max-[599px]:text-[3.5vw] mb-1">
-                    Current Highest Bid:
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[1.1vw] max-[599px]:text-[4vw] font-bold text-[#4B2E1B]">
-                      $123.45
-                    </span>
-                    <span className="text-xs max-[599px]:text-[2.5vw] text-[#6C5A4E]">
-                      (by Abhisekh)
-                    </span>
-                  </div>
-                </div>
-
-                {/* Seller */}
-                <div>
-                  <p className="font-[second] font-semibold text-[.95vw] max-[599px]:text-[3.5vw] mb-1">
-                    Sellers Bid:
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[1.1vw] max-[599px]:text-[4vw] font-bold text-[#4B2E1B]">
-                      $123.45
-                    </span>
-                    <span className="text-xs max-[599px]:text-[2.5vw] text-[#6C5A4E]">
-                      (by Sameer)
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
 
-            {/* Bottom Info */}
-            <div className="mt-4 text-sm text-[#6C5A4E] flex flex-wrap gap-4 text-[.8vw] max-[599px]:text-[3vw]">
-              <span>{product.cupsSold}</span>
-              <span>60-day Money Back Guarantee</span>
-              <span>Ships within 24 Hours Mon-Fri</span>
+            <div className="mt-4 text-sm text-[#6C5A4E] flex flex-wrap gap-4">
+              <span>Quantity: {product.quantity}</span>
+              <span>Starting Price: ${product.startPrice}</span>
+              <span>Current Highest Bid: ${product.highestBid}</span>
+              <span>Status: {product.status}</span>
             </div>
           </div>
         </div>

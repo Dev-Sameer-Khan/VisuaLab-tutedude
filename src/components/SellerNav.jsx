@@ -62,6 +62,7 @@ const SellerNav = () => {
               { to: "/seller/canceled", label: "Canceled" },
               { to: "/seller/bid", label: "Bid" },
               { to: "/seller/shipped", label: "Shipped" },
+              { to: "/", label: "Main Page" }, // Added Main Page link
             ].map(({ to, label }) => {
               const currentPath = window.location.pathname.replace(/\/$/, "");
               const linkPath = to.replace(/\/$/, "");
