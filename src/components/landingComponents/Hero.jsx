@@ -3,7 +3,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <section className="w-full h-screen max-[599px]:h-[120vh] text-[#F9F5ED] relative overflow-hidden">
+    <section className="w-full h-screen text-[#F9F5ED] relative overflow-hidden">
     <div className="background w-full h-full">
       <video
         className="w-full h-full object-cover"
