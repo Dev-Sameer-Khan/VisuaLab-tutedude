@@ -26,7 +26,7 @@ const Product = () => {
 
     const fetchProduct = async () => {
       try {
-        const response = await fetch(/api/v1/product/${productId});
+        const response = await fetch(`/api/v1/product/${productId}`);
         if (!response.ok) throw new Error('Failed to fetch product details.');
         const data = await response.json();
         setProduct(data?.data);
@@ -39,10 +39,10 @@ const Product = () => {
 
     // Listen for bid updates
     socket.on("bidUpdate", (newBid) => {
-      console.log(New bid from ${newBid});
-      toast.success(New bid from ${newBid.name}: $${newBid.amount});
+      console.log(`New bid from ${newBid}`);
+      toast.success(`New bid from ${newBid.name}: $${newBid.amount}`);
 
-      // // Update highest bid in product state
+      // Update highest bid in product state
       setProduct((prev) => ({
         ...prev,
         highestBid: newBid.amount,
@@ -50,14 +50,13 @@ const Product = () => {
       }));
     });
 
-    // asdf
-
     socket.on("bidError", (message) => {
-      toast.error(Bid error: ${message});
+      toast.error(`Bid error: ${message}`);
     });
 
     // Cleanup
     return () => {
+      socket.emit('leaveRoom', productId); // Leave the room on unmount
       socket.off("bidUpdate");
       socket.off("bidError");
     };
@@ -91,7 +90,7 @@ const Product = () => {
       name: user.name,
     });
 
-    toast.success(Bid of $${bidAmount} placed successfully!);
+    toast.success(`Bid of $${bidAmount} placed successfully!`);
     setBidAmount('');
   };
 
@@ -181,7 +180,7 @@ const Product = () => {
                     id="bidAmount"
                     type="number"
                     step="0.01"
-                    placeholder={Enter a bid higher than $${product.highestBid}}
+                    placeholder={`Enter a bid higher than $${product.highestBid}`}
                     value={bidAmount}
                     onChange={(e) => setBidAmount(e.target.value)}
                     className="border border-[#4B2E1B] rounded-lg px-4 py-2 text-[1vw] focus:outline-none focus:ring-2 focus:ring-orange-300"
