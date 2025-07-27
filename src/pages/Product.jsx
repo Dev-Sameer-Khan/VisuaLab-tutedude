@@ -102,7 +102,7 @@ const Product = () => {
                 {["1 Pack", "2 Pack", "4 Pack"].map((size) => (
                   <button
                     key={size}
-                    className={`border px-4 py-2 rounded-xl text-sm transition ${
+                    className={`border px-4 py-2 rounded-xl text-sm transition₹{
                       packSize === size
                         ? "bg-[#4B2E1B] text-white"
                         : "bg-white text-[#4B2E1B] border-[#4B2E1B]"
@@ -200,7 +200,7 @@ const Product = () => {
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="text-[1.1vw] max-[599px]:text-[4vw] font-bold text-[#4B2E1B]">
-                      $123.45
+                     ₹123.45
                     </span>
                     <span className="text-xs max-[599px]:text-[2.5vw] text-[#6C5A4E]">
                       (by Abhisekh)
@@ -215,7 +215,7 @@ const Product = () => {
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="text-[1.1vw] max-[599px]:text-[4vw] font-bold text-[#4B2E1B]">
-                    ${bidAmount}
+                   ₹{bidAmount}
                     </span>
                     <span className="text-xs max-[599px]:text-[2.5vw] text-[#6C5A4E]">
                       (by {bidderName})
@@ -228,7 +228,7 @@ const Product = () => {
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="text-[1.1vw] max-[599px]:text-[4vw] font-bold text-[#4B2E1B]">
-                    $104
+                   ₹104
                     </span>
                     <span className="text-xs max-[599px]:text-[2.5vw] text-[#6C5A4E]">
                       (by Aditya)
