@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Hero from '../components/landingComponents/Hero'
 import Category from '../components/landingComponents/Category'
@@ -11,8 +11,16 @@ import Gurantee from '../components/landingComponents/Gurantee'
 import Footer from '../components/Footer'
 import AllCategory from '../components/landingComponents/AllCategory'
 import Search from '../components/Search'
+import socket from '../config/socket.mjs'
 
 const App = () => {
+  useEffect(() => {
+    if(!socket.connect){
+      socket.connect();
+      console.log('Socket connection established');
+    }
+  }, []);
+
   return (
     <main className='w-full relative overflow-hidden font-[one]'>
       <Navbar/>

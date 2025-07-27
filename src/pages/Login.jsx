@@ -49,7 +49,7 @@ const Login = () => {
           <div className="mt-7 flex flex-col items-center gap-2 text-[#5c432d] text-base">
             <span>
               Don't have an account yet?{' '}
-              <Link to="/signup" className="underline hover:text-[#47321c]">
+              <Link to="/signUp" className="underline hover:text-[#47321c]">
                 Create account
               </Link>
             </span>
