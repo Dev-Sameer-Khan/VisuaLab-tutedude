@@ -8,14 +8,14 @@ const Login = () => {
   useEffect(() => {
     const login = localStorage.getItem("isLoggedIn");
     if (login) {
-      window.location.href = "/seller/dashboard";
+      window.location.href = "/seller/all-order";
     }
   }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
     localStorage.setItem('isLoggedIn', true);
-    window.location.href = "/seller/dashboard";
+    window.location.href = "/seller/all-order";
   };
 
   return (

@@ -16,7 +16,7 @@ const WhyUs = () => {
     {/* Left Text */}
     <div className="flex-1 flex flex-col max-[1025px]:w-full mb-8 max-[599px]:mb-0">
       <h2 className="font-[one] text-[4vw] max-[1025px]:text-[6vw] max-[599px]:text-[8vw] leading-tight">
-        Unlike Any Other <br /> Mushroom Coffee
+      Unlike Any other <br /> Packaged Goodies
       </h2>
     </div>
 
@@ -28,21 +28,21 @@ const WhyUs = () => {
         <div className="head flex flex-col gap-4 pb-6 max-[599px]:pb-2 max-[599px]:gap-0 border-b border-[#59432D]">
           <h1 className="text-[#FF8100] text-[4vw] max-[1025px]:text-[5vw] max-[599px]:text-[7vw]">9 in 10</h1>
           <p className="text-[1.5vw] max-[1025px]:text-[2vw] max-[599px]:text-base leading-tight">
-            Four Sigmatic buyers say it works
+          MundyExpress Buyers say it's the best 
           </p>
         </div>
         <div className="btm py-6 flex flex-col gap-6 max-[599px]:gap-2">
           <div className="flex rounded overflow-hidden text-[1.2vw] max-[1025px]:text-[1.8vw] max-[599px]:text-sm">
             <span className="bg-[#FF8100] text-[#F9F5ED] p-2">#1</span>
             <span className="bg-[#FAE9C8] p-2">
-              in Consumer Satisfaction
+            in Customer Satisfaction 
             </span>
           </div>
           <p className="text-[1.5vw] max-[1025px]:text-[2vw] max-[599px]:text-base leading-tight">
-            Ranked by Four Sigmatic buyers highest on taste & efficacy vs buyers of competitive products.
+          Ranked by MundyExpress buyers as Healty & Less Costly vs buyers of competitive products.
           </p>
           <p className="italic text-[.9vw] max-[1025px]:text-[1.2vw] max-[599px]:text-xs mt-6 max-[599px]:mt-0">
-            Source: Mindsight Brand Health Study 2024
+          Source: Times of India Study of Brand Growth 2025
           </p>
         </div>
       </div>
@@ -52,15 +52,15 @@ const WhyUs = () => {
         <div className="head flex flex-col gap-4 pb-6 max-[599px]:pb-2 max-[599px]:gap-0 border-b border-[#59432D]">
           <h1 className="text-[#FF8100] text-[4vw] max-[1025px]:text-[5vw] max-[599px]:text-[7vw]">94%</h1>
           <p className="text-[1.5vw] max-[1025px]:text-[2vw] max-[599px]:text-base leading-tight">
-            of Four Sigmatic buyers plan on buying again
+          of MundyExpress buyers plan on buying again
           </p>
         </div>
         <div className="btm py-6 flex flex-col gap-6">
           <p className="text-[1.5vw] max-[1025px]:text-[2vw] max-[599px]:text-base leading-tight">
-            People switch to Four Sigmatic because of:
+          people switch to MundyExpress because of:
           </p>
           <div className="space-y-2 text-[#FF8100] text-[1.2vw] max-[1025px]:text-[1.8vw] max-[599px]:text-sm">
-            {["Better Taste", "Better Ingredients", "Better Results*"].map((reason, i) => (
+            {["Better Value", "Less Costly", "Easy of Storage"].map((reason, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span className="rounded-full w-6 h-6 flex items-center justify-center bg-[#FF8100] text-[#F9F5ED] leading-none text-sm">
                   {i + 1}
