@@ -12,6 +12,7 @@ import Footer from '../components/Footer'
 import AllCategory from '../components/landingComponents/AllCategory'
 import Search from '../components/Search'
 import socket from '../config/socket.mjs'
+import Loader from '../components/Loader'
 
 const App = () => {
   useEffect(() => {
@@ -23,6 +24,7 @@ const App = () => {
 
   return (
     <main className='w-full relative overflow-hidden font-[one]'>
+      <Loader/>
       <Navbar/>
       <Hero/>
       {/* <Search /> */}

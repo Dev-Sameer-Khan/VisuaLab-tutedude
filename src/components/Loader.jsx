@@ -62,13 +62,13 @@ const Loader = () => {
   return (
     <section
       ref={loader}
-      className="w-full h-screen bg-white text-black flex items-center justify-between flex-col fixed top-0 left-0 z-[99999]"
+      className="w-full h-screen bg-[#F9F5ED] text-[#59432D] flex items-center justify-between flex-col fixed top-0 left-0 z-[99999]"
     >
       <div
         ref={line}
-        className="w-[95%] mt-2 h-[.3%] bg-black/10 rounded-full relative overflow-hidden"
+        className="w-[95%] mt-2 h-[.3%] bg-[#59432D]/10 rounded-full relative overflow-hidden"
       >
-        <span ref={anim} className="anim absolute top-0 left-0 w-0 h-full bg-black"></span>
+        <span ref={anim} className="anim absolute top-0 left-0 w-0 h-full bg-[#59432D]"></span>
       </div>
       <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-full h-full flex items-center justify-center ">
         <div className="flex w-[15%] h-[40%] flex-col items-center justify-center">
@@ -82,11 +82,11 @@ const Loader = () => {
       </div>
       <div
          ref={text}
-        className="w-full flex items-center justify-between px-6 py-2 font-[bold] text-zinc-700"
+        className="w-full flex items-center justify-between px-6 py-2 font-[one] text-[#59432D]"
       >
-        <h1>Cristina</h1>
+        <h1>Mundy</h1>
         <CountUp to={100} from={0} separator="," direction="up" duration={5} />
-        <h1>Gómez</h1>
+        <h1>Express</h1>
       </div>
     </section>
   );

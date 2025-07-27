@@ -18,7 +18,7 @@ const Search = ({ showSearch, onClose }) => {
     <div className="fixed inset-0 z-[99999999] backdrop-blur-sm bg-[#F4EFEA]/90 flex justify-end">
       <div className="w-full max-w-md h-full p-6 pt-8 relative shadow-xl bg-[#F8F4EC] rounded-l-2xl">
         <button
-          className="absolute top-5 right-5 text-[#4B2E1B] hover:scale-110 transition"
+          className="absolute text-2xl top-5 right-5 text-[#4B2E1B] hover:scale-110 transition"
           onClick={onClose}
           aria-label="Close search"
         >

@@ -66,7 +66,7 @@ const Navbar = () => {
             {/* Center Logo */}
             <Link
               to="/"
-              className="logo flex items-center justify-center max-[599px]:self-center mr-16 max-[599px]:mr-10"
+              className="logo flex items-center justify-center max-[599px]:self-center mr-20 max-[599px]:mr-10"
             >
               <img
                 className="object-contain w-32 max-[1025px]:w-20 max-[599px]:w-20"
