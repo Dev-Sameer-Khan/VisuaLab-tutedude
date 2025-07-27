@@ -20,7 +20,9 @@ const Product = () => {
 
   // Fetch product details and set up socket listeners
   useEffect(() => {
-    socket.emit("joinRoom", productId);
+    if (productId) {
+      socket.emit('joinRoom', productId);
+    }
 
     const fetchProduct = async () => {
       try {
@@ -38,14 +40,14 @@ const Product = () => {
     // Listen for bid updates
     socket.on("bidUpdate", (newBid) => {
       console.log(`New bid from ${newBid}`);
-      // toast.success(`New bid from ${newBid.name}: $${newBid.amount}`);
+      toast.success(`New bid from ${newBid.name}: $${newBid.amount}`);
 
       // // Update highest bid in product state
-      // setProduct((prev) => ({
-      //   ...prev,
-      //   highestBid: newBid.amount,
-      //   bids: [...(prev?.bids || []), newBid],
-      // }));
+      setProduct((prev) => ({
+        ...prev,
+        highestBid: newBid.amount,
+        bids: [...(prev?.bids || []), newBid],
+      }));
     });
 
     socket.on("bidError", (message) => {
