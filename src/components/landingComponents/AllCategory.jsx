@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Link } from "react-router-dom";
 
 // Dummy data for category products
 const categoryProducts = {
@@ -16,7 +17,7 @@ const categoryProducts = {
       image: "https://res.cloudinary.com/djzddppwb/image/upload/v1753610304/Product_Mockup1_ocld9q.png",
       title: "Cashews",
       price: "$12.00",
-      link: "/product/",
+      link: "/product/cashew",
       buttonText: "Buy Now",
     },
   ],
@@ -25,14 +26,14 @@ const categoryProducts = {
       image: "https://res.cloudinary.com/djzddppwb/image/upload/v1753610308/Product_Mockup4_fv4a42.png",
       title: "Carrots",
       price: "$2.00",
-      link: "/product/",
+      link: "/product/carrot",
       buttonText: "Shop Now",
     },
     {
       image: "https://res.cloudinary.com/djzddppwb/image/upload/v1753610308/Product_Mockup4_fv4a42.png",
       title: "Broccoli",
       price: "$3.00",
-      link: "/product/",
+      link: "/product/broccoli",
       buttonText: "Shop Now",
     },
   ],
@@ -41,14 +42,14 @@ const categoryProducts = {
       image: "https://res.cloudinary.com/djzddppwb/image/upload/v1753610304/Product_Mockup3_ffjiwx.png",
       title: "Milk",
       price: "$1.50",
-      link: "/product/",
+      link: "/product/milk",
       buttonText: "Order Now",
     },
     {
       image: "https://res.cloudinary.com/djzddppwb/image/upload/v1753610304/Product_Mockup3_ffjiwx.png",
       title: "Cheese",
       price: "$4.00",
-      link: "/product/",
+      link: "/product/cheese",
       buttonText: "Order Now",
     },
   ],
@@ -57,14 +58,14 @@ const categoryProducts = {
       image: "https://res.cloudinary.com/djzddppwb/image/upload/v1753610303/Product_Mockup2_semiam.png",
       title: "Garam Masala",
       price: "$5.00",
-      link: "/product/",
+      link: "/product/masala",
       buttonText: "Add to Cart",
     },
     {
       image: "https://res.cloudinary.com/djzddppwb/image/upload/v1753610303/Product_Mockup2_semiam.png",
       title: "Turmeric",
       price: "$3.50",
-      link: "/product/",
+      link: "/product/turmeric",
       buttonText: "Add to Cart",
     },
   ],
@@ -122,11 +123,11 @@ const AllCategory = () => {
                       </h4>
                       <p className="text-[1.2vw] max-[1025px]:text-lg max-[599px]:text-base">{product.price}</p>
                     </div>
-                    <a href={product.link || "#"}>
+                    <Link to={product.link || "#"}>
                       <button className="text-[1.3vw] max-[1025px]:text-[1.8vw] max-[599px]:text-base w-full cursor-pointer border border-[#FF8100] bg-[#FF8100] text-white hover:bg-white hover:text-[#FF8100] transition duration-300 rounded-full px-6 py-2 max-[599px]:py-3">
                         {product.buttonText || "Bid Now"}
                       </button>
-                    </a>
+                    </Link>
                   </div>
                 </SwiperSlide>
               ))}
