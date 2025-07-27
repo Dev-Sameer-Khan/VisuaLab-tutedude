@@ -50,6 +50,8 @@ const Product = () => {
       }));
     });
 
+    // asdf
+
     socket.on("bidError", (message) => {
       toast.error(`Bid error: ${message}`);
     });
