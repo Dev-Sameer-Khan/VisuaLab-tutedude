@@ -2,11 +2,11 @@
 
 @font-face {
     font-family: "one";
-    src: url(../public/fonts/1.woff2);
+    src: url(../fonts/1.woff2);
 }
 @font-face {
     font-family: "second";
-    src: url(../public/fonts/3.woff2);
+    src: url(../fonts/3.woff2);
 }
 
 ::-webkit-scrollbar {
