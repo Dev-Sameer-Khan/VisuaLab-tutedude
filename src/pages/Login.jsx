@@ -6,16 +6,16 @@ import Footer from '../components/Footer';
 const Login = () => {
 
   useEffect(() => {
-    const login = localStorage.getItem("isLoggedIn");
-    if (login) {
-      window.location.href = "/seller/dashboard";
-    }
+    // const login = localStorage.getItem("isLoggedIn");
+    // if (login) {
+    //   // window.location.href = "/seller/dashboard";
+    // }
   }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    localStorage.setItem('isLoggedIn', true);
-    window.location.href = "/seller/dashboard";
+    // localStorage.setItem('isLoggedIn', true);
+    // window.location.href = "/seller/dashboard";
   };
 
   return (
@@ -49,7 +49,7 @@ const Login = () => {
           <div className="mt-7 flex flex-col items-center gap-2 text-[#5c432d] text-base">
             <span>
               Don't have an account yet?{' '}
-              <Link to="/signup" className="underline hover:text-[#47321c]">
+              <Link to="/signUp" className="underline hover:text-[#47321c]">
                 Create account
               </Link>
             </span>
