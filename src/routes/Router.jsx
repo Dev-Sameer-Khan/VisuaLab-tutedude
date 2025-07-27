@@ -9,7 +9,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 
-const routes = createBrowserRouter([
+const Router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
@@ -42,4 +42,4 @@ const routes = createBrowserRouter([
   },
 ]);
 
-export default routes;
+export default Router;

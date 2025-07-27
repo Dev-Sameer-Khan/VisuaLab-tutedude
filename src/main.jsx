@@ -4,7 +4,7 @@ import './index.css'
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import router from './router/routes';
+import Router from "./routes/Router.jsx";
 import { RouterProvider } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,6 +18,6 @@ gsap.ticker.lagSmoothing(0);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-     <RouterProvider router={router} />
+     <RouterProvider router={Router} />
   </StrictMode>,
 )
